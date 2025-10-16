@@ -1,21 +1,20 @@
 {
   "auto1": {
-    "principal": "./modelo/auto1/principal.jpg",
+    "principal": "./modelo/auto1/principal",
     "galeria": [
-      "./modelo/auto1/1.jpg",
-      "./modelo/auto1/2.jpg",
-      "./modelo/auto1/3.jpg"
+      "./modelo/auto1/1"
     ]
   },
   "auto2": {
-    "principal": "./modelo/auto2/principal.jpg",
+    "principal": "./modelo/auto2/principal",
     "galeria": [
-      "./modelo/auto2/1.jpg",
-      "./modelo/auto2/2.jpg"
+      "./modelo/auto2/1"
     ]
   },
   "auto3": {
-    "principal": "./modelo/auto3/principal.jpg",
-    "galeria": []
+    "principal": "./modelo/auto3/principal",
+    "galeria": [
+      "./modelo/auto3/1"
+    ]
   }
 }
