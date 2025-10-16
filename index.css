@@ -29,6 +29,7 @@ header{position:sticky;top:0;z-index:100;backdrop-filter:saturate(180%) blur(8px
 section{padding:32px 0}
 .title{margin:0 0 18px;font-size:24px;letter-spacing:.2px;display:flex;align-items:center;gap:10px}
 
+/* ===== Carrusel Modelos ===== */
 .carousel{position:relative;}
 .track{display:flex; gap:18px; overflow-x:auto; padding-bottom:8px; scroll-snap-type:x mandatory; scroll-behavior:smooth; -webkit-overflow-scrolling:touch;}
 .track::-webkit-scrollbar{height:10px}
@@ -37,8 +38,25 @@ section{padding:32px 0}
 @media (min-width:1100px){ .card{flex-basis:280px} }
 @media (max-width:520px){ .card{flex-basis:86%} }
 
-.thumb{height:170px;display:flex;align-items:center;justify-content:center;background:#fff;border-bottom:1px dashed var(--borda);color:var(--muted);font-weight:600}
-.thumb img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;padding:8px;display:block;background:#fff}
+/* ▶︎ Thumbnails en alta: el cuadro mantiene 280×170 y la imagen llena sin deformar */
+.thumb{
+  aspect-ratio: 280 / 170;      /* misma proporción que 280×170 */
+  width:100%;                   /* el ancho lo dicta la card (≈280px) */
+  display:flex; align-items:center; justify-content:center;
+  background:#fff;
+  border-bottom:1px dashed var(--borda);
+  color:var(--muted); font-weight:600;
+}
+.thumb img{
+  width:100%; height:100%;
+  object-fit:cover;             /* llena el cuadro; usa la imagen grande */
+  display:block;
+  background:#fff;
+  /* nitidez al reducir imágenes grandes */
+  image-rendering:auto;
+  -webkit-transform:translateZ(0);
+  backface-visibility:hidden;
+}
 
 .card-body{padding:16px}
 .card h3{margin:0 0 6px;font-size:18px}
@@ -46,6 +64,7 @@ section{padding:32px 0}
 .price{font-weight:800;font-size:18px;margin-bottom:14px}
 .card .btn{width:100%}
 
+/* Flechas */
 .ctrl{position:absolute; top:50%; transform:translateY(-50%); width:44px;height:44px;border-radius:12px;border:1px solid var(--borda); background:#fff; box-shadow:var(--shadow); display:grid;place-items:center;}
 .ctrl[disabled]{opacity:.5;pointer-events:none}
 .prev{left:-6px} .next{right:-6px}
@@ -53,6 +72,7 @@ section{padding:32px 0}
 .chev{width:18px;height:18px;display:block;border:solid var(--ink);border-width:0 2px 2px 0;padding:3px}
 .chev.right{transform:rotate(-45deg)} .chev.left{transform:rotate(135deg)}
 
+/* Form */
 .form{background:#fff;border:1px solid var(--borda);border-radius:18px;box-shadow:var(--shadow);padding:20px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
@@ -64,39 +84,30 @@ textarea{min-height:120px;resize:vertical}
 footer{padding:22px 0 40px;color:var(--muted);font-size:13px;text-align:center}
 footer a{color:var(--muted);text-decoration:none}
 
-/* ===== Modal galería ===== */
+/* ===== Modal galería (sin cambios de comportamiento) ===== */
 .modal{position:fixed;inset:0;display:none}
 .modal.is-open{display:block}
 .modal__backdrop{position:absolute;inset:0;background:rgba(10,20,40,.55);backdrop-filter:blur(2px)}
-
-/* → Nuevo diseño: imagen ocupa toda el área central y miniaturas abajo */
 .modal__dialog{
   position:relative;z-index:1;
   width:min(960px,92vw);height:min(80vh,720px);
   margin:6vh auto;background:#fff;border-radius:16px;box-shadow:var(--shadow);
   display:grid;grid-template-rows:1fr auto;overflow:hidden
 }
-
 .modal__close{position:absolute;top:8px;right:12px;font-size:28px;background:#fff;border:1px solid var(--borda);border-radius:10px;width:40px;height:40px;cursor:pointer}
 .modal__nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1px solid var(--borda);background:#fff;cursor:pointer;box-shadow:var(--shadow);z-index:2}
 .modal__nav.prev{left:10px}
 .modal__nav.next{right:10px}
-
-/* 🔹 Mejora de nitidez y HD */
+/* nitidez en modal */
 #galeriaImg{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  display:block;
-  padding:12px;
-  /* Alta calidad en navegadores */
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  image-rendering: high-quality;
+  width:100%; height:100%;
+  object-fit:contain; display:block; padding:12px;
+  image-rendering:-webkit-optimize-contrast;
+  image-rendering:crisp-edges;
+  image-rendering:high-quality;
+  -webkit-transform:translateZ(0);
   backface-visibility:hidden;
-  transform:translateZ(0);
 }
-
 .thumbs{
   display:flex;gap:8px;padding:8px 10px;background:rgba(255,255,255,.95);
   overflow:auto;align-items:center;justify-content:flex-start
