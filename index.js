@@ -1,11 +1,15 @@
-// === Mantengo tu lógica original ===
+// === Mantengo tu lógica original + nueva compatibilidad universal de imágenes ===
+
+// Simula envío del formulario
 function enviarConsulta(e){
   e.preventDefault();
   const nombre = document.getElementById('nombre').value.trim();
   alert(`¡Gracias ${nombre}! Recibimos tu consulta y te contactaremos a la brevedad.`);
-  e.target.reset(); window.scrollTo({top:0, behavior:'smooth'});
+  e.target.reset();
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 
+// Carrusel (botones + drag)
 (function(){
   const track = document.getElementById('track');
   const prev = document.querySelector('.prev');
@@ -23,8 +27,15 @@ function enviarConsulta(e){
     next.disabled = track.scrollLeft >= maxScroll;
   }
 
-  function scrollByCards(n){ track.scrollBy({left: cardWidth()*n, behavior:'smooth'}); }
-  function visibleCount(){ const cw = cardWidth(); return Math.max(1, Math.floor(track.clientWidth / cw)); }
+  function scrollByCards(n){
+    track.scrollBy({left: cardWidth()*n, behavior:'smooth'});
+  }
+
+  function visibleCount(){
+    const cw = cardWidth();
+    return Math.max(1, Math.floor(track.clientWidth / cw));
+  }
+
   prev.addEventListener('click', ()=>scrollByCards(-1*visibleCount()));
   next.addEventListener('click', ()=>scrollByCards(visibleCount()));
 
@@ -32,23 +43,27 @@ function enviarConsulta(e){
   const start = (x)=>{isDown=true;startX=x;scrollStart=track.scrollLeft;track.classList.add('dragging')}
   const move  = (x)=>{ if(!isDown) return; track.scrollLeft = scrollStart - (x-startX) }
   const end   = ()=>{isDown=false;track.classList.remove('dragging')}
+
   track.addEventListener('mousedown',e=>start(e.pageX));
   window.addEventListener('mousemove',e=>move(e.pageX));
   window.addEventListener('mouseup',end);
+
   track.addEventListener('touchstart',e=>start(e.touches[0].pageX),{passive:true});
   track.addEventListener('touchmove',e=>move(e.touches[0].pageX),{passive:true});
   track.addEventListener('touchend',end);
+
   track.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight'){ e.preventDefault(); scrollByCards(1); }
     if(e.key==='ArrowLeft'){  e.preventDefault(); scrollByCards(-1); }
   });
+
   track.setAttribute('tabindex','0');
   track.addEventListener('scroll', updateArrows, {passive:true});
   window.addEventListener('resize', updateArrows);
   updateArrows();
 })();
 
-// === Banner auto: ./banner/banner.png ===
+// === Banner automático ./banner/banner.png ===
 document.addEventListener('DOMContentLoaded', () => {
   const bannerEl = document.querySelector('.hero-banner');
   const bannerURL = './banner/banner.png';
@@ -58,9 +73,30 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(()=>{});
 });
 
-// ========= NUEVO: Carga por carpetas y galería =========
-// Estructura esperada: /pagina/modelo/models.json describe auto1..auto10
-// Cada "autoN" incluye "principal" y "galeria" (array de rutas).
+// ========= NUEVO SISTEMA UNIVERSAL PARA PNG/JPG/WEBP =========
+const TRY_EXTS = ['png','jpg','jpeg','webp'];
+
+// Evita fallos con HEAD: usa un <img> invisible para testear existencia real
+function imgExists(url){
+  return new Promise(resolve=>{
+    const i = new Image();
+    i.onload = () => resolve(true);
+    i.onerror = () => resolve(false);
+    i.src = url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now(); // anti-caché
+  });
+}
+
+// Si viene sin extensión, prueba todas
+async function resolvePath(pathOrBase){
+  if (/\.(png|jpe?g|webp)$/i.test(pathOrBase)) return pathOrBase;
+  for (const ext of TRY_EXTS){
+    const u = `${pathOrBase}.${ext}`;
+    if (await imgExists(u)) return u;
+  }
+  return null;
+}
+
+// ========= Carga por carpetas + galería =========
 const MODELS_JSON = './modelo/models.json';
 const galleryMap = new Map(); // slot -> array de imágenes
 
@@ -68,13 +104,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const track = document.getElementById('track');
   const cards = track.querySelectorAll('.card[data-slot]');
   let data = null;
+
   try {
     const res = await fetch(MODELS_JSON, {cache:'no-store'});
     if (res.ok) data = await res.json();
   } catch(_){}
-
-  // Fallback por si no hay JSON: seguimos soportando ./modelo/auto_N.*
-  const fallbackExts = ['png','jpg','jpeg','webp'];
 
   for (const card of cards){
     const slot = Number(card.getAttribute('data-slot'));
@@ -82,18 +116,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     let principal = null;
     let galeria = [];
 
-    // Con JSON
+    // JSON definido
     if (data && data[`auto${slot}`]){
       const info = data[`auto${slot}`];
-      principal = info.principal || null;
-      galeria = Array.isArray(info.galeria) ? info.galeria : [];
+      principal = info.principal ? await resolvePath(info.principal) : null;
+      galeria = Array.isArray(info.galeria)
+        ? (await Promise.all(info.galeria.map(p => resolvePath(p)))).filter(Boolean)
+        : [];
     }
 
-    // Fallback: principal = ./modelo/auto_slot.ext si existe
+    // Fallback si no hay JSON
     if (!principal){
-      for (const ext of fallbackExts){
+      for (const ext of TRY_EXTS){
         const url = `./modelo/auto_${slot}.${ext}`;
-        try { const r = await fetch(url,{method:'HEAD'}); if (r.ok){ principal = url; break; } } catch(_){}
+        if (await imgExists(url)) { principal = url; break; }
       }
     }
 
@@ -101,19 +137,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       thumb.innerHTML = `<img src="${principal}" alt="Auto ${slot}">`;
     }
 
-    // Guardamos galería (siempre incluye principal como primera)
     const imgs = [principal, ...galeria.filter(Boolean)];
     galleryMap.set(slot, imgs.filter(Boolean));
 
-    // Abrir modal al clickear la imagen o la parte superior de la card
+    // Abrir galería al click
     thumb.style.cursor = 'zoom-in';
     thumb.addEventListener('click', () => openGallery(slot, 0));
-    // Evitar que el botón "Me interesa" abra la galería
     card.querySelector('.btn')?.addEventListener('click', e => e.stopPropagation());
   }
 });
 
-// ===== Modal =====
+// ===== Modal Galería =====
 const modal = document.getElementById('galeriaModal');
 const imgEl = document.getElementById('galeriaImg');
 const thumbsEl = document.getElementById('galeriaThumbs');
@@ -131,21 +165,24 @@ function openGallery(slot, index=0){
   modal.classList.add('is-open');
   modal.setAttribute('aria-hidden','false');
 }
+
 function closeGallery(){
   modal.classList.remove('is-open');
   modal.setAttribute('aria-hidden','true');
 }
+
 function renderGallery(){
   imgEl.src = currentList[currentIndex];
-  // miniaturas
   thumbsEl.innerHTML = '';
   currentList.forEach((src,i)=>{
     const t = document.createElement('img');
-    t.src = src; if (i===currentIndex) t.classList.add('is-active');
+    t.src = src;
+    if (i===currentIndex) t.classList.add('is-active');
     t.addEventListener('click', ()=>{ currentIndex=i; renderGallery(); });
     thumbsEl.appendChild(t);
   });
 }
+
 function next(){ currentIndex = (currentIndex+1)%currentList.length; renderGallery(); }
 function prev(){ currentIndex = (currentIndex-1+currentList.length)%currentList.length; renderGallery(); }
 
