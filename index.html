@@ -1,60 +1,192 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Modelos destacados</title>
-  <link rel="stylesheet" href="./index.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Concesionaria | Landing Autos</title>
+<link rel="stylesheet" href="./index.css">
 </head>
 <body>
-  <h2 class="title">Modelos destacados</h2>
 
-  <div class="carousel">
-    <div class="track">
-      <!-- 10 tarjetas con hueco; el JS cargará auto_N.* desde ./modelo/ -->
-      <article class="card">
-        <div class="thumb" data-auto="1">Imagen Auto 1</div>
-        <div class="card-body"><h3>Modelo A</h3><div class="meta">Automática • 0 km • Nafta</div><div class="price">$ 23.500.000</div><a class="btn" href="#">Me interesa</a></div>
-      </article>
-      <article class="card">
-        <div class="thumb" data-auto="2">Imagen Auto 2</div>
-        <div class="card-body"><h3>Modelo B</h3><div class="meta">Manual • 15.000 km • Nafta</div><div class="price">$ 18.900.000</div><a class="btn" href="#">Me interesa</a></div>
-      </article>
-      <article class="card">
-        <div class="thumb" data-auto="3">Imagen Auto 3</div>
-        <div class="card-body"><h3>Modelo C</h3><div class="meta">Automática • 5.000 km • Híbrido</div><div class="price">$ 28.100.000</div><a class="btn" href="#">Me interesa</a></div>
-      </article>
-      <article class="card">
-        <div class="thumb" data-auto="4">Imagen Auto 4</div>
-        <div class="card-body"><h3>Modelo D</h3><div class="meta">Manual • 0 km • Nafta</div><div class="price">$ 21.700.000</div><a class="btn" href="#">Me interesa</a></div>
-      </article>
-      <article class="card">
-        <div class="thumb" data-auto="5">Imagen Auto 5</div>
-        <div class="card-body"><h3>Modelo E</h3><div class="meta">CVT • 12.000 km • Nafta</div><div class="price">$ 24.900.000</div><a class="btn" href="#">Me interesa</a></div>
-      </article>
-      <article class="card">
-        <div class="thumb" data-auto="6">Imagen Auto 6</div>
-        <div class="card-body"><h3>Modelo F</h3><div class="meta">Automática • 0 km • Eléctrico</div><div class="price">$ 39.500.000</div><a class="btn" href="#">Me interesa</a></div>
-      </article>
-      <article class="card">
-        <div class="thumb" data-auto="7">Imagen Auto 7</div>
-        <div class="card-body"><h3>Modelo G</h3><div class="meta">Manual • 35.000 km • Diésel</div><div class="price">$ 16.800.000</div><a class="btn" href="#">Me interesa</a></div>
-      </article>
-      <article class="card">
-        <div class="thumb" data-auto="8">Imagen Auto 8</div>
-        <div class="card-body"><h3>Modelo H</h3><div class="meta">Automática • 8.000 km • Nafta</div><div class="price">$ 27.200.000</div><a class="btn" href="#">Me interesa</a></div>
-      </article>
-      <article class="card">
-        <div class="thumb" data-auto="9">Imagen Auto 9</div>
-        <div class="card-body"><h3>Modelo I</h3><div class="meta">Manual • 0 km • Nafta</div><div class="price">$ 19.950.000</div><a class="btn" href="#">Me interesa</a></div>
-      </article>
-      <article class="card">
-        <div class="thumb" data-auto="10">Imagen Auto 10</div>
-        <div class="card-body"><h3>Modelo J</h3><div class="meta">Automática • 2.000 km • Híbrido</div><div class="price">$ 31.400.000</div><a class="btn" href="#">Me interesa</a></div>
-      </article>
+<header>
+  <div class="wrap">
+    <div class="bar">
+      <a class="logo" href="#"><div class="logo-mark">C</div><div>Clicon<span style="color:var(--brand)"> Automotores</span></div></a>
+      <div class="cta">
+        <a href="#modelos" class="btn ghost">Modelos</a>
+        <a href="#consulta" class="btn brand">Consultar</a>
+      </div>
     </div>
   </div>
+</header>
 
-  <script src="./index.js"></script>
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <h1>Encontrá tu próximo <span style="color:var(--brand)">0km</span> o usado premium</h1>
+          <p>Financiación flexible, toma de usados y entrega inmediata en los modelos seleccionados.</p>
+          <div class="hero-actions">
+            <a href="#modelos" class="btn brand">Ver modelos</a>
+            <a href="#consulta" class="btn ghost">Quiero contactarme</a>
+          </div>
+        </div>
+        <div class="hero-banner"><span>Banner Principal (acá va tu imagen 1200×360)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODELOS (CARRUSEL) -->
+  <section id="modelos">
+    <div class="wrap">
+      <h2 class="title">Modelos destacados</h2>
+
+      <div class="carousel" aria-label="Carrusel de modelos">
+        <button class="ctrl prev" aria-label="Anterior"><i class="chev left"></i></button>
+        <div class="track" id="track">
+          <!-- 1 -->
+          <article class="card">
+            <div class="thumb">Imagen Auto 1</div>
+            <div class="card-body">
+              <h3>Modelo A</h3>
+              <div class="meta">Automática • 0 km • Nafta</div>
+              <div class="price">$ 23.500.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+          <!-- 2 -->
+          <article class="card">
+            <div class="thumb">Imagen Auto 2</div>
+            <div class="card-body">
+              <h3>Modelo B</h3>
+              <div class="meta">Manual • 15.000 km • Nafta</div>
+              <div class="price">$ 18.900.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+          <!-- 3 -->
+          <article class="card">
+            <div class="thumb">Imagen Auto 3</div>
+            <div class="card-body">
+              <h3>Modelo C</h3>
+              <div class="meta">Automática • 5.000 km • Híbrido</div>
+              <div class="price">$ 28.100.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+          <!-- 4 -->
+          <article class="card">
+            <div class="thumb">Imagen Auto 4</div>
+            <div class="card-body">
+              <h3>Modelo D</h3>
+              <div class="meta">Manual • 0 km • Nafta</div>
+              <div class="price">$ 21.700.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+          <!-- 5 -->
+          <article class="card">
+            <div class="thumb">Imagen Auto 5</div>
+            <div class="card-body">
+              <h3>Modelo E</h3>
+              <div class="meta">CVT • 12.000 km • Nafta</div>
+              <div class="price">$ 24.900.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+          <!-- 6 -->
+          <article class="card">
+            <div class="thumb">Imagen Auto 6</div>
+            <div class="card-body">
+              <h3>Modelo F</h3>
+              <div class="meta">Automática • 0 km • Eléctrico</div>
+              <div class="price">$ 39.500.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+          <!-- 7 -->
+          <article class="card">
+            <div class="thumb">Imagen Auto 7</div>
+            <div class="card-body">
+              <h3>Modelo G</h3>
+              <div class="meta">Manual • 35.000 km • Diésel</div>
+              <div class="price">$ 16.800.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+          <!-- 8 -->
+          <article class="card">
+            <div class="thumb">Imagen Auto 8</div>
+            <div class="card-body">
+              <h3>Modelo H</h3>
+              <div class="meta">Automática • 8.000 km • Nafta</div>
+              <div class="price">$ 27.200.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+          <!-- 9 -->
+          <article class="card">
+            <div class="thumb">Imagen Auto 9</div>
+            <div class="card-body">
+              <h3>Modelo I</h3>
+              <div class="meta">Manual • 0 km • Nafta</div>
+              <div class="price">$ 19.950.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+          <!-- 10 -->
+          <article class="card">
+            <div class="thumb">Imagen Auto 10</div>
+            <div class="card-body">
+              <h3>Modelo J</h3>
+              <div class="meta">Automática • 2.000 km • Híbrido</div>
+              <div class="price">$ 31.400.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+        </div>
+        <button class="ctrl next" aria-label="Siguiente"><i class="chev right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARIO -->
+  <section id="consulta">
+    <div class="wrap">
+      <h2 class="title">Enviá tu consulta</h2>
+      <form class="form" onsubmit="enviarConsulta(event)">
+        <div class="form-grid">
+          <div><label for="nombre">Nombre y apellido</label><input class="input" id="nombre" name="nombre" required /></div>
+          <div><label for="email">Email</label><input class="input" type="email" id="email" name="email" required /></div>
+          <div><label for="telefono">Teléfono</label><input class="input" id="telefono" name="telefono" /></div>
+          <div>
+            <label for="modelo">Modelo de interés</label>
+            <select id="modelo" name="modelo" class="input">
+              <option value="">Seleccionar…</option>
+              <option>Modelo A</option><option>Modelo B</option><option>Modelo C</option><option>Modelo D</option>
+              <option>Modelo E</option><option>Modelo F</option><option>Modelo G</option><option>Modelo H</option>
+              <option>Modelo I</option><option>Modelo J</option>
+            </select>
+          </div>
+          <div style="grid-column:1/-1">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" placeholder="Contame qué estás buscando…"></textarea>
+          </div>
+        </div>
+        <button class="btn brand" type="submit">Enviar consulta</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    © 2025 Clicon Automotores · <a href="#modelos">Modelos</a> · <a href="#consulta">Contacto</a>
+  </div>
+</footer>
+
+<script src="./index.js"></script>
 </body>
 </html>
