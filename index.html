@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Axen Automotores | Modelos</title>
+<style>
+  :root {
+    --bg:#F8FBFF; --card:#FFFFFF; --borda:#E3ECF7; --ink:#0B1C33; --muted:#5A6B85;
+    --brand:#3399FF; --brand-600:#2a86e0; --shadow:0 10px 24px rgba(22,46,89,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;color:var(--ink)}
+  header{padding:20px;text-align:center;background:#fff;box-shadow:var(--shadow);position:sticky;top:0;z-index:10}
+  header h1{font-size:28px;color:var(--brand)}
+  .wrap{max-width:1200px;margin:0 auto;padding:20px}
+  h2{font-size:24px;margin-bottom:20px;color:var(--ink);text-align:left}
+
+  /* Carrusel */
+  .carousel{position:relative}
+  .track{
+    display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;padding-bottom:10px;
+  }
+  .track::-webkit-scrollbar{height:10px}
+  .track::-webkit-scrollbar-thumb{background:#dbe7f6;border-radius:8px}
+  .card{
+    flex:0 0 280px;background:var(--card);border:1px solid var(--borda);
+    border-radius:18px;box-shadow:var(--shadow);scroll-snap-align:start;
+    display:flex;flex-direction:column;overflow:hidden;
+  }
+  .thumb{height:170px;display:grid;place-items:center;background:#fff;color:var(--muted)}
+  .thumb img{width:100%;height:170px;object-fit:cover;}
+  .card-body{padding:16px}
+  .card h3{margin:0 0 6px;font-size:18px}
+  .meta{font-size:13px;color:var(--muted);margin-bottom:10px}
+  .price{font-weight:700;font-size:17px;margin-bottom:14px}
+  .btn{
+    display:inline-block;padding:10px 16px;border-radius:12px;
+    background:var(--brand);color:#fff;text-decoration:none;text-align:center;
+    font-weight:600;font-size:15px;transition:.2s background;
+  }
+  .btn:hover{background:var(--brand-600)}
+  @media(max-width:520px){.card{flex:0 0 85%}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Axen Automotores</h1>
+</header>
+
+<main class="wrap">
+  <h2>Modelos disponibles</h2>
+  <div class="carousel">
+    <div class="track" id="track">
+      <!-- Se cargan automáticamente las imágenes -->
+    </div>
+  </div>
+</main>
+
+<footer style="text-align:center;padding:20px;color:var(--muted);font-size:14px">
+  © 2025 Axen Automotores - Todos los derechos reservados
+</footer>
+
+<script>
+(async () => {
+  const track = document.getElementById('track');
+  const MAX_AUTOS = 50; // número máximo de imágenes a detectar
+  const BASE = 'assets/autos/';
+  const EXTS = ['jpg','jpeg','png','webp'];
+
+  // Verifica cuál imagen existe
+  async function existeImagen(urls){
+    for(const u of urls){
+      try{
+        const res = await fetch(u,{method:'HEAD'});
+        if(res.ok) return u;
+      }catch(e){}
+    }
+    return null;
+  }
+
+  // Crea la card del modelo
+  function crearCard({src,index}){
+    const letra = String.fromCharCode(64 + ((index % 26) || 26));
+    return `
+      <article class="card">
+        <div class="thumb"><img src="${src}" alt="Auto ${index}"></div>
+        <div class="card-body">
+          <h3>Modelo ${letra}</h3>
+          <div class="meta">Automático • 0 km • Nafta</div>
+          <div class="price">$ 0</div>
+          <a href="#" class="btn">Me interesa</a>
+        </div>
+      </article>`;
+  }
+
+  // Recorre los archivos posibles y los agrega
+  for(let i=1;i<=MAX_AUTOS;i++){
+    const posibles = EXTS.map(ext => `${BASE}auto_${i}.${ext}`);
+    const imagen = await existeImagen(posibles);
+    if(imagen){
+      track.insertAdjacentHTML('beforeend', crearCard({src:imagen,index:i}));
+    }
+  }
+
+  // Si no hay imágenes, muestra un mensaje
+  if(!track.children.length){
+    track.innerHTML = `
+      <article class="card">
+        <div class="thumb">Subí tus imágenes a /assets/autos/ (auto_1.jpg, auto_2.png, ...)</div>
+        <div class="card-body">
+          <h3>Sin modelos</h3>
+          <div class="meta">Aún no hay autos cargados</div>
+        </div>
+      </article>`;
+  }
+})();
+</script>
+
+</body>
+</html>
