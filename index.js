@@ -68,14 +68,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const exts = ['png','jpg','jpeg','webp'];
 
   thumbs.forEach((el, i) => {
-    const n = i + 1; // posición natural => auto_1, auto_2, ...
+    const n = i + 1;
     (async () => {
       for (const ext of exts) {
         const url = `${base}auto_${n}.${ext}`;
         try {
           const res = await fetch(url, { method: 'HEAD' });
           if (res.ok) {
-            // Reemplazo SOLO el contenido visual, sin tocar clases/estilos
             el.innerHTML = `<img src="${url}" alt="Auto ${n}" style="width:100%;height:170px;object-fit:cover;border-top-left-radius:18px;border-top-right-radius:18px;">`;
             break;
           }
@@ -83,4 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     })();
   });
+});
+
+// === NUEVO: Banner automático ./banner/banner.png ===
+document.addEventListener('DOMContentLoaded', () => {
+  const bannerEl = document.querySelector('.hero-banner');
+  const bannerURL = './banner/banner.png';
+  if (!bannerEl) return;
+  fetch(bannerURL, { method:'HEAD' })
+    .then(r => { if (r.ok) bannerEl.innerHTML = `<img src="${bannerURL}" alt="Banner principal">`; })
+    .catch(()=>{});
 });

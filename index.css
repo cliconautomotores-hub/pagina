@@ -26,6 +26,14 @@ header{position:sticky;top:0;z-index:100;backdrop-filter:saturate(180%) blur(8px
 .hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .hero-banner{background:#fff;border:1px dashed var(--borda);border-radius:var(--radius);height:360px;display:grid;place-items:center;color:var(--muted);box-shadow:var(--shadow)}
 .hero-banner span{opacity:.9;font-weight:600}
+/* Imagen de banner */
+.hero-banner img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:var(--radius);
+  display:block;
+}
 
 section{padding:32px 0}
 .title{margin:0 0 18px;font-size:24px;letter-spacing:.2px;display:flex;align-items:center;gap:10px}
