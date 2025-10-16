@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
           const res = await fetch(url, { method: 'HEAD' });
           if (res.ok) {
-            el.innerHTML = `<img src="${url}" alt="Auto ${n}" style="width:100%;height:170px;object-fit:cover;border-top-left-radius:18px;border-top-right-radius:18px;">`;
+            el.innerHTML = `<img src="${url}" alt="Auto ${n}">`;
             break;
           }
         } catch(_) {}
