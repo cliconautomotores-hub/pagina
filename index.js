@@ -1,4 +1,4 @@
-// === Mantengo tu lógica original + nueva compatibilidad universal de imágenes ===
+// === Mantengo tu lógica original + soporte completo para PNG/JPG/JPEG/WEBP ===
 
 // Simula envío del formulario
 function enviarConsulta(e){
@@ -73,22 +73,37 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(()=>{});
 });
 
-// ========= NUEVO SISTEMA UNIVERSAL PARA PNG/JPG/WEBP =========
+// ========= NUEVO SISTEMA DE IMÁGENES UNIVERSAL =========
 const TRY_EXTS = ['png','jpg','jpeg','webp'];
 
-// Evita fallos con HEAD: usa un <img> invisible para testear existencia real
+// Test real con <img> para evitar fallos de HEAD o caché
 function imgExists(url){
   return new Promise(resolve=>{
     const i = new Image();
     i.onload = () => resolve(true);
     i.onerror = () => resolve(false);
-    i.src = url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now(); // anti-caché
+    i.src = url + (url.includes('?') ? '&' : '?') + 'v=' + Date.now();
   });
 }
 
-// Si viene sin extensión, prueba todas
+// Verifica incluso si viene con extensión incorrecta o sin extensión
 async function resolvePath(pathOrBase){
-  if (/\.(png|jpe?g|webp)$/i.test(pathOrBase)) return pathOrBase;
+  const hasExt = /\.(png|jpe?g|webp)$/i.test(pathOrBase);
+
+  // Si tiene extensión, probamos primero tal cual
+  if (hasExt) {
+    if (await imgExists(pathOrBase)) return pathOrBase;
+
+    // Si no existe, probamos las otras variantes
+    const base = pathOrBase.replace(/\.(png|jpe?g|webp)$/i, '');
+    for (const ext of TRY_EXTS){
+      const alt = `${base}.${ext}`;
+      if (alt.toLowerCase() !== pathOrBase.toLowerCase() && await imgExists(alt)) return alt;
+    }
+    return null;
+  }
+
+  // Si no tiene extensión, probamos todas
   for (const ext of TRY_EXTS){
     const u = `${pathOrBase}.${ext}`;
     if (await imgExists(u)) return u;
