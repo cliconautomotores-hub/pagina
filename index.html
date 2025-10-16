@@ -47,7 +47,7 @@
         <button class="ctrl prev" aria-label="Anterior"><i class="chev left"></i></button>
         <div class="track" id="track">
           <!-- 1 -->
-          <article class="card">
+          <article class="card" data-slot="1">
             <div class="thumb">Imagen Auto 1</div>
             <div class="card-body">
               <h3>Modelo A</h3>
@@ -57,7 +57,7 @@
             </div>
           </article>
           <!-- 2 -->
-          <article class="card">
+          <article class="card" data-slot="2">
             <div class="thumb">Imagen Auto 2</div>
             <div class="card-body">
               <h3>Modelo B</h3>
@@ -67,7 +67,7 @@
             </div>
           </article>
           <!-- 3 -->
-          <article class="card">
+          <article class="card" data-slot="3">
             <div class="thumb">Imagen Auto 3</div>
             <div class="card-body">
               <h3>Modelo C</h3>
@@ -77,7 +77,7 @@
             </div>
           </article>
           <!-- 4 -->
-          <article class="card">
+          <article class="card" data-slot="4">
             <div class="thumb">Imagen Auto 4</div>
             <div class="card-body">
               <h3>Modelo D</h3>
@@ -87,7 +87,7 @@
             </div>
           </article>
           <!-- 5 -->
-          <article class="card">
+          <article class="card" data-slot="5">
             <div class="thumb">Imagen Auto 5</div>
             <div class="card-body">
               <h3>Modelo E</h3>
@@ -97,7 +97,7 @@
             </div>
           </article>
           <!-- 6 -->
-          <article class="card">
+          <article class="card" data-slot="6">
             <div class="thumb">Imagen Auto 6</div>
             <div class="card-body">
               <h3>Modelo F</h3>
@@ -107,7 +107,7 @@
             </div>
           </article>
           <!-- 7 -->
-          <article class="card">
+          <article class="card" data-slot="7">
             <div class="thumb">Imagen Auto 7</div>
             <div class="card-body">
               <h3>Modelo G</h3>
@@ -117,7 +117,7 @@
             </div>
           </article>
           <!-- 8 -->
-          <article class="card">
+          <article class="card" data-slot="8">
             <div class="thumb">Imagen Auto 8</div>
             <div class="card-body">
               <h3>Modelo H</h3>
@@ -127,7 +127,7 @@
             </div>
           </article>
           <!-- 9 -->
-          <article class="card">
+          <article class="card" data-slot="9">
             <div class="thumb">Imagen Auto 9</div>
             <div class="card-body">
               <h3>Modelo I</h3>
@@ -137,7 +137,7 @@
             </div>
           </article>
           <!-- 10 -->
-          <article class="card">
+          <article class="card" data-slot="10">
             <div class="thumb">Imagen Auto 10</div>
             <div class="card-body">
               <h3>Modelo J</h3>
@@ -186,6 +186,18 @@
     © 2025 Clicon Automotores · <a href="#modelos">Modelos</a> · <a href="#consulta">Contacto</a>
   </div>
 </footer>
+
+<!-- Modal galería -->
+<div id="galeriaModal" class="modal" aria-hidden="true">
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Galería de imágenes">
+    <button class="modal__close" title="Cerrar" data-close>&times;</button>
+    <img id="galeriaImg" alt="Foto del vehículo">
+    <button class="modal__nav prev" id="galPrev">&#10094;</button>
+    <button class="modal__nav next" id="galNext">&#10095;</button>
+    <div id="galeriaThumbs" class="thumbs"></div>
+  </div>
+</div>
 
 <script src="./index.js"></script>
 </body>
