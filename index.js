@@ -148,8 +148,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
+    // === AGREGADO: aplicar object-position desde JSON (si existe) ===
+    const pos =
+      (data && data[`auto${slot}`] && data[`auto${slot}`].pos) || 'center';
+
     if (principal){
-      thumb.innerHTML = `<img src="${principal}" alt="Auto ${slot}">`;
+      thumb.innerHTML = `<img src="${principal}" alt="Auto ${slot}" style="object-position:${pos}">`;
     }
 
     const imgs = [principal, ...galeria.filter(Boolean)];

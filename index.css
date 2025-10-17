@@ -50,6 +50,7 @@ section{padding:32px 0}
 .thumb img{
   width:100%; height:100%;
   object-fit:cover;             /* llena el cuadro; usa la imagen grande */
+  object-position:center;       /* posición por defecto */
   display:block;
   background:#fff;
   /* nitidez al reducir imágenes grandes */
