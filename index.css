@@ -166,6 +166,7 @@ footer a{color:var(--muted);text-decoration:none}
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
   transition: transform 0.2s ease, background-color 0.3s ease;
+  animation: pulseWhatsApp 2.5s infinite;
 }
 
 #btnContactarme:hover {
@@ -179,4 +180,11 @@ footer a{color:var(--muted);text-decoration:none}
   width: 20px;
   height: 20px;
   background: url('https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg') no-repeat center/contain;
+}
+
+/* === Pulso suave del botón WhatsApp === */
+@keyframes pulseWhatsApp {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
 }
