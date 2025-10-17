@@ -119,21 +119,34 @@ footer a{color:var(--muted);text-decoration:none}
 .thumbs img{height:64px;width:auto;border-radius:8px;border:2px solid transparent;cursor:pointer}
 .thumbs img.is-active{border-color:var(--brand)}
 
-/* === 🔧 Ajuste uniforme para que todas las imágenes respeten el mismo cuadro === */
+/* === Cuadrado uniforme de las imágenes === */
 .thumb{
-  height:170px !important;        /* alto fijo */
-  overflow:hidden !important;     /* recorta lo que sobra */
+  height:170px !important;
+  overflow:hidden !important;
 }
-
 .thumb img{
   width:100% !important;
   height:100% !important;
-  object-fit:cover !important;    /* llena el cuadro */
+  object-fit:cover !important;
   object-position:center 30% !important;
   display:block;
 }
-
-/* En móvil: conserva proporción del cuadrado */
 @media (max-width:520px){
   .thumb{height:calc(86vw * (170 / 280)) !important;}
+}
+
+/* === Modal más abajo y más chico === */
+.modal__dialog{
+  width: min(820px, 88vw) !important;
+  height: min(70vh, 620px) !important;
+  margin: 12vh auto !important;
+}
+.modal__nav.prev{ left: 12px !important; }
+.modal__nav.next{ right: 12px !important; }
+@media (max-width: 640px){
+  .modal__dialog{
+    width: 92vw !important;
+    height: 66vh !important;
+    margin: 10vh auto !important;
+  }
 }
