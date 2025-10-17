@@ -150,3 +150,33 @@ footer a{color:var(--muted);text-decoration:none}
     margin: 10vh auto !important;
   }
 }
+
+/* === Estilo WhatsApp para el botón dinámico === */
+#btnContactarme {
+  background-color: #25D366;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+#btnContactarme:hover {
+  background-color: #1ebe5d;
+  transform: scale(1.05);
+}
+
+#btnContactarme::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg') no-repeat center/contain;
+}
