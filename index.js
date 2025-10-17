@@ -238,10 +238,11 @@ document.addEventListener('keydown', e=>{
     }
   }
 
+  // ✅ Versión corregida: redirección directa (funciona en móviles)
   async function handleClick() {
     const cfg = await getConfig();
     const url = buildWAUrl(cfg.whatsapp_number, cfg.default_message);
-    window.open(url, '_blank', 'noopener');
+    window.location.href = url; // redirección directa, no bloqueada por móviles
   }
 
   document.addEventListener('DOMContentLoaded', () => {
