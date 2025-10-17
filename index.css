@@ -119,16 +119,21 @@ footer a{color:var(--muted);text-decoration:none}
 .thumbs img{height:64px;width:auto;border-radius:8px;border:2px solid transparent;cursor:pointer}
 .thumbs img.is-active{border-color:var(--brand)}
 
-/* === 🔧 Ajuste para que todas las imágenes queden como el modelo C === */
-.thumb img{
-  object-fit: cover;          /* llena el cuadro */
-  object-position: center 30%;/* sube un poco el encuadre */
-  display: block;
+/* === 🔧 Ajuste uniforme para que todas las imágenes respeten el mismo cuadro === */
+.thumb{
+  height:170px !important;        /* alto fijo */
+  overflow:hidden !important;     /* recorta lo que sobra */
 }
 
-/* Ajuste fino para las 2 primeras (PNG con borde blanco) */
-.card[data-slot="1"] .thumb img,
-.card[data-slot="2"] .thumb img{
-  object-position: center 25%; /* sube más el foco */
-  transform: scale(1.08);      /* recorta el borde blanco sin deformar */
+.thumb img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;    /* llena el cuadro */
+  object-position:center 30% !important;
+  display:block;
+}
+
+/* En móvil: conserva proporción del cuadrado */
+@media (max-width:520px){
+  .thumb{height:calc(86vw * (170 / 280)) !important;}
 }
