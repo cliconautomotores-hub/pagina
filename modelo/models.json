@@ -2,19 +2,121 @@
   "auto1": {
     "principal": "./modelo/auto1/principal",
     "galeria": [
-      "./modelo/auto1/1"
+      "./modelo/auto1/1",
+      "./modelo/auto1/2",
+      "./modelo/auto1/3",
+      "./modelo/auto1/4",
+      "./modelo/auto1/5",
+      "./modelo/auto1/6",
+      "./modelo/auto1/7"
     ]
   },
   "auto2": {
     "principal": "./modelo/auto2/principal",
     "galeria": [
-      "./modelo/auto2/1"
+      "./modelo/auto2/1",
+      "./modelo/auto2/2",
+      "./modelo/auto2/3",
+      "./modelo/auto2/4",
+      "./modelo/auto2/5",
+      "./modelo/auto2/6",
+      "./modelo/auto2/7"
     ]
   },
   "auto3": {
     "principal": "./modelo/auto3/principal",
     "galeria": [
-      "./modelo/auto3/1"
+      "./modelo/auto3/1",
+      "./modelo/auto3/2",
+      "./modelo/auto3/3",
+      "./modelo/auto3/4",
+      "./modelo/auto3/5",
+      "./modelo/auto3/6",
+      "./modelo/auto3/7"
+    ]
+  },
+  "auto4": {
+    "principal": "./modelo/auto4/principal",
+    "galeria": [
+      "./modelo/auto4/1",
+      "./modelo/auto4/2",
+      "./modelo/auto4/3",
+      "./modelo/auto4/4",
+      "./modelo/auto4/5",
+      "./modelo/auto4/6",
+      "./modelo/auto4/7"
+    ]
+  },
+  "auto5": {
+    "principal": "./modelo/auto5/principal",
+    "galeria": [
+      "./modelo/auto5/1",
+      "./modelo/auto5/2",
+      "./modelo/auto5/3",
+      "./modelo/auto5/4",
+      "./modelo/auto5/5",
+      "./modelo/auto5/6",
+      "./modelo/auto5/7"
+    ]
+  },
+  "auto6": {
+    "principal": "./modelo/auto6/principal",
+    "galeria": [
+      "./modelo/auto6/1",
+      "./modelo/auto6/2",
+      "./modelo/auto6/3",
+      "./modelo/auto6/4",
+      "./modelo/auto6/5",
+      "./modelo/auto6/6",
+      "./modelo/auto6/7"
+    ]
+  },
+  "auto7": {
+    "principal": "./modelo/auto7/principal",
+    "galeria": [
+      "./modelo/auto7/1",
+      "./modelo/auto7/2",
+      "./modelo/auto7/3",
+      "./modelo/auto7/4",
+      "./modelo/auto7/5",
+      "./modelo/auto7/6",
+      "./modelo/auto7/7"
+    ]
+  },
+  "auto8": {
+    "principal": "./modelo/auto8/principal",
+    "galeria": [
+      "./modelo/auto8/1",
+      "./modelo/auto8/2",
+      "./modelo/auto8/3",
+      "./modelo/auto8/4",
+      "./modelo/auto8/5",
+      "./modelo/auto8/6",
+      "./modelo/auto8/7"
+    ]
+  },
+  "auto9": {
+    "principal": "./modelo/auto9/principal",
+    "galeria": [
+      "./modelo/auto9/1",
+      "./modelo/auto9/2",
+      "./modelo/auto9/3",
+      "./modelo/auto9/4",
+      "./modelo/auto9/5",
+      "./modelo/auto9/6",
+      "./modelo/auto9/7"
+    ]
+  },
+  "auto10": {
+    "principal": "./modelo/auto10/principal",
+    "galeria": [
+      "./modelo/auto10/1",
+      "./modelo/auto10/2",
+      "./modelo/auto10/3",
+      "./modelo/auto10/4",
+      "./modelo/auto10/5",
+      "./modelo/auto10/6",
+      "./modelo/auto10/7"
     ]
   }
 }
