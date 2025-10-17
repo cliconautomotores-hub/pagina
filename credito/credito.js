@@ -1,4 +1,4 @@
-/* Simulador de crédito (GitHub Pages con TNA automática del BCRA) */
+/* Simulador de crédito (GitHub Pages con TNA automática + timeout y fallback 1%) */
 (function () {
   const $ = (id) => document.getElementById(id);
   const money = (x) =>
@@ -8,23 +8,38 @@
       maximumFractionDigits: 0,
     }).format(x || 0);
 
-  // --------- Obtener TNA desde datos.gob.ar ----------
+  // ---------- Fetch con timeout ----------
+  async function fetchWithTimeout(url, ms = 4000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), ms);
+    try {
+      const r = await fetch(url, { cache: "no-store", signal: controller.signal });
+      return r;
+    } finally {
+      clearTimeout(id);
+    }
+  }
+
+  // ---------- Obtener TNA desde datos.gob.ar (compatible CORS) ----------
   async function getTNAReferencia() {
     try {
-      const url = "https://apis.datos.gob.ar/series/api/series/?ids=7917";
-      const r = await fetch(url, { cache: "no-store" });
+      // 7917 = serie TPM (TNA). Pedimos SOLO el último dato.
+      const url = "https://apis.datos.gob.ar/series/api/series/?ids=7917&last=1&format=json";
+      const r = await fetchWithTimeout(url, 4000);
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const data = await r.json();
-      const valor = Number(data?.data?.[0]?.[1]);
-      const fecha = data?.data?.[0]?.[0];
-      if (isFinite(valor)) return { valor, fecha };
+      // data.data => [[fechaISO, valor]]
+      const fila = data?.data?.[0];
+      const fechaISO = fila?.[0];
+      const valor = Number(fila?.[1]);
+      if (isFinite(valor)) return { valor, fecha: fechaISO };
       throw new Error("Sin valor");
     } catch (e) {
-      console.warn("No se pudo obtener TNA del BCRA (datos.gob.ar):", e);
+      console.warn("No se pudo obtener TNA (datos.gob.ar):", e?.message || e);
       return null;
     }
   }
-  // ----------------------------------------------------
+  // ----------------------------------------------------------------------
 
   function calcular() {
     const monto = parseFloat($("cr-monto").value) || 0;
@@ -51,7 +66,7 @@
     $("cr-anticipo").value = "";
     $("cr-plazo").value = "36";
     $("cr-tasa").value = "0";
-    ["cr-res-financiado", "cr-res-cuota", "cr-res-interes", "cr-res-total", "cr-res-tasa"]
+    ["cr-res-financiado","cr-res-cuota","cr-res-interes","cr-res-total","cr-res-tasa"]
       .forEach((id) => ($(`${id}`).textContent = "-"));
     const nota = $("tna-fuente");
     if (nota) nota.textContent = "";
@@ -65,7 +80,7 @@
     btn.addEventListener("click", calcular);
     clr.addEventListener("click", limpiar);
 
-    ["cr-monto", "cr-anticipo", "cr-plazo", "cr-tasa"].forEach((id) => {
+    ["cr-monto","cr-anticipo","cr-plazo","cr-tasa"].forEach((id) => {
       const el = $(id);
       if (!el) return;
       el.addEventListener("keydown", (e) => {
@@ -73,32 +88,43 @@
       });
     });
 
-    // 🔹 Estado inicial mientras busca la TNA
+    // UI de carga
     const tasaInput = $("cr-tasa");
     const nota = $("tna-fuente");
     tasaInput.value = "";
     if (nota) {
       nota.innerHTML = `<span style="display:inline-flex;align-items:center;gap:4px;">
-        <span class="spinner" style="width:10px;height:10px;border:2px solid #ccc;border-top:2px solid #3399ff;border-radius:50%;animation:spin 0.8s linear infinite;"></span>
+        <span class="spinner" style="width:10px;height:10px;border:2px solid #ccd6e4;border-top:2px solid #3399ff;border-radius:50%;animation:spin 0.8s linear infinite;"></span>
         Cargando BCRA...
       </span>`;
     }
 
     const data = await getTNAReferencia();
+
     if (data) {
-      tasaInput.value = data.valor.toFixed(2);
-      if (nota) nota.textContent = `(BCRA, ${data.fecha})`;
+      tasaInput.value = Number(data.valor).toFixed(2);
+      if (nota) nota.textContent = `(BCRA, ${formatearFecha(data.fecha)})`;
     } else {
+      // 🔴 Fallback solicitado: 1%
       tasaInput.value = "1.00";
       if (nota) nota.textContent = "(sin conexión)";
     }
   }
 
-  // 🔹 Animación CSS del spinner (por JS para no requerir hoja adicional)
+  // Pequeña utilidad para fecha AAAA-MM-DD → DD/MM/AAAA (si llega AAAA-MM)
+  function formatearFecha(f) {
+    if (!f) return "";
+    const s = String(f);
+    // formato típico: "2025-10-17" o "2025-10"
+    const [a, m, d] = s.split("-");
+    if (a && m && d) return `${d}/${m}/${a}`;
+    if (a && m) return `01/${m}/${a}`;
+    return s;
+  }
+
+  // Spinner CSS (inyectado)
   const style = document.createElement("style");
-  style.textContent = `
-  @keyframes spin { from {transform:rotate(0deg);} to {transform:rotate(360deg);} }
-  `;
+  style.textContent = `@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}`;
   document.head.appendChild(style);
 
   if (document.readyState === "loading") {
