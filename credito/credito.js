@@ -1,4 +1,4 @@
-/* Simulador de crédito (inicializa aunque el script se inyecte después) */
+/* Simulador de crédito (GitHub Pages compatible con datos.gob.ar) */
 (function () {
   const $ = (id) => document.getElementById(id);
   const money = (x) =>
@@ -8,55 +8,22 @@
       maximumFractionDigits: 0,
     }).format(x || 0);
 
-  // --------- TNA BCRA: intenta varias rutas conocidas ----------
-  async function fetchJson(url) {
-    const r = await fetch(url, { cache: "no-store" });
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    return r.json();
-  }
-
-  async function getTNAReferenciaBCRA() {
-    // Intenta V3 (catálogo + serie)
+  // --------- TNA desde datos.gob.ar (compatible con navegador) ----------
+  async function getTNAReferencia() {
     try {
-      const BASE = "https://api.bcra.gob.ar/estadisticas/v3.0";
-      const listData = await fetchJson(`${BASE}/Monetarias`);
-      const target = listData.results?.find((v) => {
-        const d = (v.descripcion || "").toLowerCase();
-        return d.includes("tasa de política monetaria") && d.includes("tna");
-      });
-      if (target) {
-        const datos = await fetchJson(`${BASE}/Monetarias/${encodeURIComponent(target.idVariable)}?limit=1`);
-        const raw = datos.results?.[0]?.valor;
-        const valor = Number(String(raw).replace(",", "."));
-        if (isFinite(valor)) return valor;
-      }
-      throw new Error("V3 sin valor");
-    } catch (_) { /* sigue */ }
-
-    // Intenta V1 serie conocida (comúnmente usada para TPM TNA)
-    try {
-      const datos = await fetchJson("https://api.bcra.gob.ar/estadisticas/v1/series/7917/datos?limit=1");
-      const raw = (datos?.results || datos?.datos || [])[0]?.valor ?? (datos?.[0]?.valor);
-      const valor = Number(String(raw).replace(",", "."));
+      const url = "https://apis.datos.gob.ar/series/api/series/?ids=7917";
+      const r = await fetch(url, { cache: "no-store" });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const data = await r.json();
+      const valor = Number(data?.data?.[0]?.[1]);
       if (isFinite(valor)) return valor;
-      throw new Error("V1/7917 sin valor");
-    } catch (_) { /* sigue */ }
-
-    // Intenta principales variables (otra ruta histórica)
-    try {
-      const pv = await fetchJson("https://api.bcra.gob.ar/estadisticas/v1/principalesvariables");
-      const tpm = (pv?.results || pv || []).find((x) => {
-        const d = (x.descripcion || x.variable || "").toLowerCase();
-        return d.includes("tasa de política monetaria") && d.includes("tna");
-      });
-      const valor = Number(String(tpm?.valor).replace(",", "."));
-      if (isFinite(valor)) return valor;
-      throw new Error("PV sin valor");
-    } catch (_) { /* nada */ }
-
-    return null;
+      throw new Error("Sin valor");
+    } catch (e) {
+      console.warn("No se pudo obtener TNA del BCRA (datos.gob.ar):", e);
+      return null;
+    }
   }
-  // ------------------------------------------------------------
+  // ----------------------------------------------------------------------
 
   function calcular() {
     const monto = parseFloat($("cr-monto").value) || 0;
@@ -64,19 +31,18 @@
     const meses = parseInt($("cr-plazo").value, 10) || 1;
     const tasaAnual = parseFloat($("cr-tasa").value) || 0;
 
-    const P = Math.max(0, monto - anticipo);        // principal financiado (sin comisión)
-    const r = (tasaAnual / 100) / 12;               // tasa mensual
+    const P = Math.max(0, monto - anticipo);
+    const r = (tasaAnual / 100) / 12;
 
     const cuota = r === 0 ? P / meses : P * r / (1 - Math.pow(1 + r, -meses));
     const totalPagar = cuota * meses;
     const interesTotal = totalPagar - P;
-    const tasaTotalAprox = `${tasaAnual.toFixed(2)}%`;
 
     $("cr-res-financiado").textContent = money(P);
     $("cr-res-cuota").textContent = money(Math.round(cuota));
     $("cr-res-interes").textContent = money(Math.round(interesTotal));
     $("cr-res-total").textContent = money(Math.round(totalPagar));
-    $("cr-res-tasa").textContent = tasaTotalAprox;
+    $("cr-res-tasa").textContent = `${tasaAnual.toFixed(2)}%`;
   }
 
   function limpiar() {
@@ -84,7 +50,7 @@
     $("cr-anticipo").value = "";
     $("cr-plazo").value = "36";
     $("cr-tasa").value = "0";
-    ["cr-res-financiado","cr-res-cuota","cr-res-interes","cr-res-total","cr-res-tasa"]
+    ["cr-res-financiado", "cr-res-cuota", "cr-res-interes", "cr-res-total", "cr-res-tasa"]
       .forEach((id) => ($(`${id}`).textContent = "-"));
     const nota = $("tna-fuente");
     if (nota) nota.textContent = "";
@@ -98,7 +64,7 @@
     btn.addEventListener("click", calcular);
     clr.addEventListener("click", limpiar);
 
-    ["cr-monto","cr-anticipo","cr-plazo","cr-tasa"].forEach((id) => {
+    ["cr-monto", "cr-anticipo", "cr-plazo", "cr-tasa"].forEach((id) => {
       const el = $(id);
       if (!el) return;
       el.addEventListener("keydown", (e) => {
@@ -106,16 +72,17 @@
       });
     });
 
-    // Trae TNA del BCRA: si llega, setea valor y leyenda; si no, deja 0
-    const tna = await getTNAReferenciaBCRA();
+    // 🔹 Toma TNA automática (BCRA vía datos.gob.ar)
+    const tna = await getTNAReferencia();
     const tasaInput = $("cr-tasa");
     const nota = $("tna-fuente");
+
     if (tna) {
       tasaInput.value = tna.toFixed(2);
       if (nota) nota.textContent = "(BCRA)";
     } else {
       tasaInput.value = "0";
-      if (nota) nota.textContent = "";
+      if (nota) nota.textContent = "(sin conexión)";
     }
   }
 
