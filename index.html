@@ -11,7 +11,10 @@
 <header>
   <div class="wrap">
     <div class="bar">
-      <a class="logo" href="#"><div class="logo-mark">C</div><div>Clicon<span style="color:var(--brand)"> Automotores</span></div></a>
+      <a class="logo" href="#">
+        <div class="logo-mark">C</div>
+        <div>Clicon<span style="color:var(--brand)"> Automotores</span></div>
+      </a>
       <div class="cta">
         <a href="#modelos" class="btn ghost">Modelos</a>
         <a href="#consulta" class="btn brand">Consultar</a>
@@ -30,7 +33,7 @@
           <p>Financiación flexible, toma de usados y entrega inmediata en los modelos seleccionados.</p>
           <div class="hero-actions">
             <a href="#modelos" class="btn brand">Ver modelos</a>
-            <!-- Botón para WhatsApp (JS lo toma por id) -->
+            <!-- Botón para WhatsApp -->
             <button id="btnContactarme" class="btn ghost" type="button">Quiero contactarme</button>
           </div>
         </div>
@@ -39,15 +42,15 @@
     </div>
   </section>
 
-  <!-- MODELOS (CARRUSEL) -->
+  <!-- MODELOS -->
   <section id="modelos">
     <div class="wrap">
       <h2 class="title">Modelos destacados</h2>
 
-      <div class="carousel" aria-label="Carrusel de modelos">
-        <button class="ctrl prev" aria-label="Anterior"><i class="chev left"></i></button>
+      <div class="carousel">
+        <button class="ctrl prev"><i class="chev left"></i></button>
         <div class="track" id="track">
-          <!-- Cards de autos -->
+          <!-- Tarjetas de autos -->
           <article class="card" data-slot="1"><div class="thumb">Imagen Auto 1</div><div class="card-body"><h3>Kangoo</h3><div class="meta">Manual • 0 km • Nafta</div><div class="price">$ 23.500.000</div><a href="#consulta" class="btn brand">Me interesa</a></div></article>
           <article class="card" data-slot="2"><div class="thumb">Imagen Auto 2</div><div class="card-body"><h3>Kwid Bitomo</h3><div class="meta">Manual • 0 km • Nafta</div><div class="price">$ 23.900.000</div><a href="#consulta" class="btn brand">Me interesa</a></div></article>
           <article class="card" data-slot="3"><div class="thumb">Imagen Auto 3</div><div class="card-body"><h3>Kardian</h3><div class="meta">Automática • 0 km • Híbrido</div><div class="price">$ 28.100.000</div><a href="#consulta" class="btn brand">Me interesa</a></div></article>
@@ -59,7 +62,7 @@
           <article class="card" data-slot="9"><div class="thumb">Imagen Auto 9</div><div class="card-body"><h3>Modelo I</h3><div class="meta">Manual • 0 km • Nafta</div><div class="price">$ 19.950.000</div><a href="#consulta" class="btn brand">Me interesa</a></div></article>
           <article class="card" data-slot="10"><div class="thumb">Imagen Auto 10</div><div class="card-body"><h3>Modelo J</h3><div class="meta">Automática • 2.000 km • Híbrido</div><div class="price">$ 31.400.000</div><a href="#consulta" class="btn brand">Me interesa</a></div></article>
         </div>
-        <button class="ctrl next" aria-label="Siguiente"><i class="chev right"></i></button>
+        <button class="ctrl next"><i class="chev right"></i></button>
       </div>
     </div>
   </section>
@@ -94,19 +97,20 @@
       <div id="credito-container"></div>
 
       <script>
-        // Carga dinámica del módulo de crédito
-        fetch('./modulos/credito/credito.html')
+        // Carga dinámica del módulo de crédito (carpeta ./credito/)
+        fetch('./credito/credito.html')
           .then(r => r.text())
           .then(html => {
             document.getElementById('credito-container').innerHTML = html;
             const link = document.createElement('link');
             link.rel = 'stylesheet';
-            link.href = './modulos/credito/credito.css';
+            link.href = './credito/credito.css';
             document.head.appendChild(link);
             const script = document.createElement('script');
-            script.src = './modulos/credito/credito.js';
+            script.src = './credito/credito.js';
             document.body.appendChild(script);
-          });
+          })
+          .catch(err => console.error('Error al cargar módulo crédito:', err));
       </script>
 
     </div>
