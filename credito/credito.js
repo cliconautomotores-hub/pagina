@@ -8,6 +8,40 @@
       maximumFractionDigits: 0,
     }).format(x || 0);
 
+  // 🔹 NUEVO: función para traer TNA desde el BCRA (referencia)
+  async function getTNAReferenciaBCRA() {
+    try {
+      const BASE = "https://api.bcra.gob.ar/estadisticas/v3.0";
+
+      // 1) Catálogo de variables monetarias
+      const listRes = await fetch(`${BASE}/Monetarias`);
+      if (!listRes.ok) throw new Error("No se pudo listar variables");
+      const listData = await listRes.json(); // { status, results: [...] }
+
+      // 2) Buscar “Tasa de Política Monetaria” en TNA
+      const target = listData.results?.find((v) => {
+        const d = (v.descripcion || "").toLowerCase();
+        return d.includes("tasa de política monetaria") && d.includes("tna");
+      });
+      if (!target) throw new Error("No se encontró variable TNA");
+
+      // 3) Pedir últimos datos de esa variable (limit=1 trae el más reciente)
+      const datosRes = await fetch(
+        `${BASE}/Monetarias/${encodeURIComponent(target.idVariable)}?limit=1`
+      );
+      if (!datosRes.ok) throw new Error("No se pudo leer la serie TNA");
+      const datos = await datosRes.json(); // { status, results: [{ valor, fecha, ... }] }
+
+      const raw = datos.results?.[0]?.valor;
+      const valor = Number(String(raw).replace(",", "."));
+      if (!isFinite(valor)) throw new Error("Valor TNA inválido");
+      return valor; // ej: 29.00
+    } catch (e) {
+      console.warn("⚠️ BCRA TNA no disponible:", e.message);
+      return null; // permite fallback manual
+    }
+  }
+
   function calcular() {
     const monto = parseFloat($("cr-monto").value) || 0;
     const anticipo = parseFloat($("cr-anticipo").value) || 0;
@@ -38,11 +72,16 @@
     $("cr-plazo").value = "36";
     $("cr-tasa").value = "36";
     $("cr-comision").value = "2";
-    ["cr-res-financiado", "cr-res-cuota", "cr-res-interes", "cr-res-total", "cr-res-tasa"]
-      .forEach((id) => ($(`${id}`).textContent = "-"));
+    [
+      "cr-res-financiado",
+      "cr-res-cuota",
+      "cr-res-interes",
+      "cr-res-total",
+      "cr-res-tasa",
+    ].forEach((id) => ($(`${id}`).textContent = "-"));
   }
 
-  function init() {
+  async function init() {
     // Si el HTML del módulo aún no fue insertado, reintenta un instante después
     const btn = $("cr-calcular");
     const clr = $("cr-limpiar");
@@ -65,6 +104,10 @@
         }
       });
     });
+
+    // 🔹 NUEVO: setea automáticamente la TNA de referencia del BCRA (si está disponible)
+    const tna = await getTNAReferenciaBCRA();
+    if (tna) $("cr-tasa").value = tna.toFixed(2);
   }
 
   // Inicializa ya si el documento está listo; si no, espera el DOMContentLoaded.
