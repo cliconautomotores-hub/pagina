@@ -1,0 +1,38 @@
+/* Panel fijo al costado derecho dentro de la sección #consulta */
+#consulta { position: relative; }
+
+#credito-module.credito-card{
+  position: absolute;
+  right: 80px;         /* separa del borde derecho */
+  top: 18px;           /* alinea con el título */
+  width: 360px;
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  font-size: 14px;
+}
+
+#credito-module h3{
+  margin: 0 0 12px;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+#credito-module .row{ margin-bottom:10px; }
+#credito-module .row label{
+  display:block; font-size:12px; color:var(--muted); margin-bottom:6px;
+}
+#credito-module .row.two{ display:flex; gap:10px; }
+#credito-module .row.two .input{ width:100%; }
+
+#credito-module .acciones{ display:flex; gap:8px; margin:6px 0 10px; }
+#credito-module .resultados{
+  border-top:1px dashed #eef6ff; padding-top:10px; color:var(--muted); font-size:14px;
+}
+#credito-module .resultados div{ margin:6px 0; color:var(--ink); }
+
+@media (max-width:1100px){
+  #credito-module{ display:none; } /* oculto en pantallas chicas */
+}
