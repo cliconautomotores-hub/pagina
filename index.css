@@ -139,7 +139,7 @@ footer a{color:var(--muted);text-decoration:none}
 .modal__dialog{
   width: min(820px, 88vw) !important;
   height: min(70vh, 620px) !important;
-  margin: 12vh auto !important;
+  margin: 18vh auto !important;
 }
 .modal__nav.prev{ left: 12px !important; }
 .modal__nav.next{ right: 12px !important; }
