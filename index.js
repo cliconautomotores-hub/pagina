@@ -214,3 +214,38 @@ document.addEventListener('keydown', e=>{
   if (e.key==='ArrowRight') next();
   if (e.key==='ArrowLeft') prev();
 });
+
+// === Contacto por WhatsApp (configurable por JSON) ===
+(function () {
+  const BTN_ID = 'btnContactarme';
+  const CONFIG_URL = './config/contacto.json';
+  const FALLBACK_NUMBER = '5491122334455';
+  const FALLBACK_MESSAGE = 'Hola! Vi los modelos y quiero más info.';
+
+  function buildWAUrl(number, message) {
+    const n = String(number).replace(/[^\d]/g, '');
+    const txt = encodeURIComponent(message || '');
+    return `https://wa.me/${n}${txt ? `?text=${txt}` : ''}`;
+  }
+
+  async function getConfig() {
+    try {
+      const r = await fetch(CONFIG_URL, { cache: 'no-store' });
+      if (!r.ok) throw 0;
+      return await r.json();
+    } catch {
+      return { whatsapp_number: FALLBACK_NUMBER, default_message: FALLBACK_MESSAGE };
+    }
+  }
+
+  async function handleClick() {
+    const cfg = await getConfig();
+    const url = buildWAUrl(cfg.whatsapp_number, cfg.default_message);
+    window.open(url, '_blank', 'noopener');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById(BTN_ID);
+    if (btn) btn.addEventListener('click', handleClick);
+  });
+})();
