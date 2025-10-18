@@ -1,20 +1,21 @@
 /* === Contenedor general de formulario y simulador === */
 #consulta .wrap {
   display: flex;
-  align-items: flex-start;   /* los alinea arriba */
-  gap: 40px;                 /* espacio entre formulario y simulador */
+  align-items: flex-start;   /* alineado arriba */
+  gap: 80px;                 /* espacio aumentado entre formulario y simulador */
 }
 
 /* === Estilo del simulador de crédito === */
 #credito-module.credito-card {
-  flex-shrink: 0;            /* evita que se achique */
-  width: 320px;              /* ancho fijo */
+  flex-shrink: 0;
+  width: 320px;
   background: #fff;
   border: 1px solid var(--borda);
   border-radius: 16px;
   box-shadow: var(--shadow);
   padding: 16px;
   z-index: 10;
+  transition: all 0.3s ease;
 }
 
 /* === Título === */
@@ -129,6 +130,7 @@
 @media (max-width: 960px) {
   #consulta .wrap {
     flex-direction: column;
+    gap: 0;
   }
 
   #credito-module.credito-card {
