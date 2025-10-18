@@ -1,19 +1,20 @@
-/* === Estilo general del simulador de crédito === */
+/* === Estilo general del simulador de crédito (posición lateral al formulario) === */
 #credito-module.credito-card {
-  position: absolute;
-  top: 40px;             /* alineado con el formulario */
-  right: 60px;           /* más cerca del formulario */
-  width: 320px;          /* más angosto que el original */
+  position: relative;        /* deja de ser absoluto, se ubica en el flujo normal */
+  display: inline-block;     /* permite que quede al lado del formulario */
+  vertical-align: top;
+  margin-left: 40px;         /* espacio entre formulario y simulador */
+  top: 0;
+  width: 320px;              /* más angosto */
   background: #fff;
   border: 1px solid var(--borda);
   border-radius: 16px;
   box-shadow: var(--shadow);
   padding: 16px;
   z-index: 10;
-  transition: all 0.3s ease;
 }
 
-/* === Título del simulador === */
+/* === Título === */
 #credito-module h2 {
   font-size: 20px;
   font-weight: 700;
@@ -22,7 +23,7 @@
   text-align: center;
 }
 
-/* === Filas del formulario === */
+/* === Filas === */
 #credito-module .row {
   margin-bottom: 10px;
 }
@@ -59,7 +60,7 @@
   border-color: var(--brand);
 }
 
-/* === Acciones (botones) === */
+/* === Botones === */
 #credito-module .acciones {
   display: flex;
   gap: 8px;
@@ -112,7 +113,7 @@
   font-weight: 600;
 }
 
-/* === Leyenda fuente BCRA === */
+/* === Leyenda BCRA === */
 #credito-module .fuente {
   margin-top: 8px;
   font-size: 12px;
@@ -121,12 +122,11 @@
   opacity: 0.8;
 }
 
-/* === Adaptación responsiva === */
+/* === Responsive: se apila debajo del formulario === */
 @media (max-width: 960px) {
   #credito-module.credito-card {
-    position: static;
+    display: block;
     width: 100%;
-    max-width: 480px;
-    margin: 20px auto 0;
+    margin: 20px 0 0;
   }
 }
