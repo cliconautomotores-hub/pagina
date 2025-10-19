@@ -3,7 +3,7 @@
 
 #credito-module.credito-card{
   position: absolute;
-  right: 80px;         /* separa del borde derecho */
+  right: 40px;         /* separa del borde derecho */
   top: 18px;           /* alinea con el título */
   width: 360px;
   background: #fff;
