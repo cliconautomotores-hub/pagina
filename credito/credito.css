@@ -1,145 +1,38 @@
-/* === Contenedor general de formulario y simulador === */
-#consulta .wrap {
-  display: flex;
-  align-items: flex-start;   /* alineado arriba */
-  gap: 180px;                /* espacio aumentado entre formulario y simulador */
-}
+/* Panel fijo al costado derecho dentro de la sección #consulta */
+#consulta { position: relative; }
 
-/* === Forzar al formulario principal a ocupar el espacio restante === */
-#consulta .form {
-  flex: 1;
-}
-
-/* === Estilo del simulador de crédito === */
-#credito-module.credito-card {
-  flex-shrink: 0;
-  width: 320px;
+#credito-module.credito-card{
+  position: absolute;
+  right: 80px;         /* separa del borde derecho */
+  top: 18px;           /* alinea con el título */
+  width: 360px;
   background: #fff;
   border: 1px solid var(--borda);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
+  border-radius: 14px;
   padding: 16px;
-  z-index: 10;
-  transition: all 0.3s ease;
-}
-
-/* === Título === */
-#credito-module h2 {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 12px;
-  text-align: center;
-}
-
-/* === Filas === */
-#credito-module .row {
-  margin-bottom: 10px;
-}
-
-#credito-module .row.two {
-  display: flex;
-  gap: 10px;
-}
-
-#credito-module label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--muted);
-  display: block;
-  margin-bottom: 4px;
-}
-
-/* === Inputs y selects === */
-#credito-module input,
-#credito-module select {
-  width: 100%;
-  padding: 10px 12px;
-  font-size: 14px;
-  border: 1px solid var(--borda);
-  border-radius: 10px;
-  background: #fafcff;
-  color: var(--ink);
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
-#credito-module input:focus,
-#credito-module select:focus {
-  border-color: var(--brand);
-}
-
-/* === Botones === */
-#credito-module .acciones {
-  display: flex;
-  gap: 8px;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-#credito-module .acciones button {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-#credito-module .acciones button.simular {
-  background: var(--brand);
-  color: #fff;
-}
-
-#credito-module .acciones button.simular:hover {
-  background: var(--brand-600);
-  transform: translateY(-1px);
-}
-
-#credito-module .acciones button.limpiar {
-  background: #f5f8ff;
-  color: var(--muted);
-  border: 1px solid var(--borda);
-}
-
-#credito-module .acciones button.limpiar:hover {
-  background: #fff;
   box-shadow: var(--shadow);
+  font-size: 14px;
 }
 
-/* === Resultado === */
-#credito-module .resultado {
-  margin-top: 16px;
-  padding: 10px 14px;
-  background: #f5f8ff;
-  border-radius: 12px;
-  border: 1px solid var(--borda);
-  font-size: 15px;
+#credito-module h3{
+  margin: 0 0 12px;
+  font-size: 18px;
   color: var(--ink);
-  text-align: center;
-  font-weight: 600;
 }
 
-/* === Leyenda BCRA === */
-#credito-module .fuente {
-  margin-top: 8px;
-  font-size: 12px;
-  text-align: center;
-  color: var(--muted);
-  opacity: 0.8;
+#credito-module .row{ margin-bottom:10px; }
+#credito-module .row label{
+  display:block; font-size:12px; color:var(--muted); margin-bottom:6px;
 }
+#credito-module .row.two{ display:flex; gap:10px; }
+#credito-module .row.two .input{ width:100%; }
 
-/* === Responsive: se apila debajo del formulario === */
-@media (max-width: 960px) {
-  #consulta .wrap {
-    flex-direction: column;
-    gap: 0;
-  }
+#credito-module .acciones{ display:flex; gap:8px; margin:6px 0 10px; }
+#credito-module .resultados{
+  border-top:1px dashed #eef6ff; padding-top:10px; color:var(--muted); font-size:14px;
+}
+#credito-module .resultados div{ margin:6px 0; color:var(--ink); }
 
-  #credito-module.credito-card {
-    width: 100%;
-    margin-top: 20px;
-  }
+@media (max-width:1100px){
+  #credito-module{ display:none; } /* oculto en pantallas chicas */
 }
