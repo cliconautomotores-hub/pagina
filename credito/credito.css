@@ -2,7 +2,12 @@
 #consulta .wrap {
   display: flex;
   align-items: flex-start;   /* alineado arriba */
-  gap: 180px;                 /* espacio aumentado entre formulario y simulador */
+  gap: 180px;                /* espacio aumentado entre formulario y simulador */
+}
+
+/* === Forzar al formulario principal a ocupar el espacio restante === */
+#consulta .form {
+  flex: 1;
 }
 
 /* === Estilo del simulador de crédito === */
