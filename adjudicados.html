@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Adjudicados | Clicon Automotores</title>
+<link rel="stylesheet" href="./index.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="bar">
+      <a class="logo" href="./index.html">
+        <div class="logo-mark">C</div>
+        <div>Clicon<span style="color:var(--brand)"> Automotores</span></div>
+      </a>
+      <div class="cta">
+        <a href="./index.html#modelos" class="btn ghost">Modelos</a>
+        <a href="./adjudicados.html" class="btn ghost">Adjudicados</a>
+        <a href="./index.html#consulta" class="btn brand">Consultar</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <h1>Vehículos <span style="color:var(--brand)">adjudicados</span></h1>
+          <p>Autos adjudicados y listos para retirar. Consultanos y coordinamos entrega o prueba.</p>
+        </div>
+        <div class="hero-banner"><span>Banner Adjudicados (opcional)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="adjudicados">
+    <div class="wrap">
+      <h2 class="title">Adjudicados — Listos para retirar</h2>
+
+      <p style="color:var(--muted);margin-bottom:16px">Aquí mostramos los vehículos adjudicados y disponibles para entrega. Si te interesa alguno podés solicitar más info desde el botón <strong>Me interesa</strong>.</p>
+
+      <div class="carousel">
+        <div class="track" style="gap:20px;" id="adjuTrack">
+          <!-- Tarjeta 1 -->
+          <article class="card">
+            <div class="thumb">ARKANA E-TECH</div>
+            <div class="card-body">
+              <h3>ARKANA E-TECH</h3>
+              <div class="meta">Valor: $ 25.000.000 (Gastos incluidos)</div>
+              <div class="meta">Toma de usado</div>
+              <div class="meta">Restan <strong>85</strong> cuotas</div>
+              <div class="price">Valor cuota $ 430.000</div>
+              <!-- Lleva al formulario de contacto en la home -->
+              <a href="./index.html#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+
+          <!-- Tarjeta 2 -->
+          <article class="card">
+            <div class="thumb">CORSA GLX</div>
+            <div class="card-body">
+              <h3>CORSA GLX</h3>
+              <div class="meta">Valor: $ 9.800.000 (Gastos incluidos)</div>
+              <div class="meta">Toma de usado</div>
+              <div class="meta">Restan <strong>42</strong> cuotas</div>
+              <div class="price">Valor cuota $ 120.000</div>
+              <a href="./index.html#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+
+          <!-- Tarjeta 3 -->
+          <article class="card">
+            <div class="thumb">LOGAN PRIVILÈGE</div>
+            <div class="card-body">
+              <h3>LOGAN PRIVILÈGE</h3>
+              <div class="meta">Valor: $ 14.200.000 (Gastos incluidos)</div>
+              <div class="meta">Toma de usado</div>
+              <div class="meta">Restan <strong>60</strong> cuotas</div>
+              <div class="price">Valor cuota $ 180.000</div>
+              <a href="./index.html#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+
+          <!-- Tarjeta 4 -->
+          <article class="card">
+            <div class="thumb">CAPTUR INTENSE</div>
+            <div class="card-body">
+              <h3>CAPTUR INTENSE</h3>
+              <div class="meta">Valor: $ 18.900.000 (Gastos incluidos)</div>
+              <div class="meta">Toma de usado</div>
+              <div class="meta">Restan <strong>30</strong> cuotas</div>
+              <div class="price">Valor cuota $ 260.000</div>
+              <a href="./index.html#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+
+          <!-- Agregá más cards según necesites -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    © 2025 Clicon Automotores · <a href="./index.html#modelos">Modelos</a> · <a href="./adjudicados.html">Adjudicados</a> · <a href="./index.html#consulta">Contacto</a>
+  </div>
+</footer>
+
+<!-- Modal galería (si querés usarla, index.js ya gestiona galería por slot) -->
+<div id="galeriaModal" class="modal" aria-hidden="true">
+  <div class="modal__backdrop" data-close></div>
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Galería de imágenes">
+    <button class="modal__close" title="Cerrar" data-close>&times;</button>
+    <img id="galeriaImg" alt="Foto del vehículo">
+    <button class="modal__nav prev" id="galPrev">&#10094;</button>
+    <button class="modal__nav next" id="galNext">&#10095;</button>
+    <div id="galeriaThumbs" class="thumbs"></div>
+  </div>
+</div>
+
+<script src="./index.js"></script>
+</body>
+</html>
