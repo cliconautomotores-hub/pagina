@@ -17,6 +17,7 @@
       </a>
       <div class="cta">
         <a href="#modelos" class="btn ghost">Modelos</a>
+        <a href="#adjudicados" class="btn ghost">Adjudicados</a>
         <a href="#consulta" class="btn brand">Consultar</a>
       </div>
     </div>
@@ -50,7 +51,7 @@
       <div class="carousel">
         <button class="ctrl prev"><i class="chev left"></i></button>
         <div class="track" id="track">
-          <!-- Tarjetas de autos -->
+          <!-- Tarjetas de autos (mantengo las 10 originales) -->
           <article class="card" data-slot="1"><div class="thumb">Imagen Auto 1</div><div class="card-body"><h3>Kangoo</h3><div class="meta">Manual • 0 km • Nafta</div><div class="price">$ 23.500.000</div><a href="#consulta" class="btn brand">Me interesa</a></div></article>
           <article class="card" data-slot="2"><div class="thumb">Imagen Auto 2</div><div class="card-body"><h3>Kwid Bitomo</h3><div class="meta">Manual • 0 km • Nafta</div><div class="price">$ 23.900.000</div><a href="#consulta" class="btn brand">Me interesa</a></div></article>
           <article class="card" data-slot="3"><div class="thumb">Imagen Auto 3</div><div class="card-body"><h3>Kardian</h3><div class="meta">Automática • 0 km • Híbrido</div><div class="price">$ 28.100.000</div><a href="#consulta" class="btn brand">Me interesa</a></div></article>
@@ -64,6 +65,72 @@
         </div>
         <button class="ctrl next"><i class="chev right"></i></button>
       </div>
+    </div>
+  </section>
+
+  <!-- ADJUDICADOS -->
+  <section id="adjudicados">
+    <div class="wrap">
+      <h2 class="title">Adjudicados — Listos para retirar</h2>
+
+      <p style="color:var(--muted);margin-bottom:16px">Aquí mostramos los vehículos adjudicados y disponibles para entrega. Si te interesa alguno podés solicitar más info o coordinar la entrega desde el formulario de contacto.</p>
+
+      <div class="carousel">
+        <!-- reutilizo el estilo de carrusel para aprovechar el scroll horizontal -->
+        <div class="track" style="gap:20px;" id="adjuTrack">
+
+          <!-- Ejemplo de tarjeta adjudicado: -->
+          <article class="card">
+            <div class="thumb">ARKANA E-TECH</div>
+            <div class="card-body">
+              <h3>ARKANA E-TECH</h3>
+              <div class="meta">Valor: $ 25.000.000 (Gastos incluidos)</div>
+              <div class="meta">Toma de usado</div>
+              <div class="meta">Restan <strong>85</strong> cuotas</div>
+              <div class="price">Valor cuota $ 430.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">CORSA GLX</div>
+            <div class="card-body">
+              <h3>CORSA GLX</h3>
+              <div class="meta">Valor: $ 9.800.000 (Gastos incluidos)</div>
+              <div class="meta">Toma de usado</div>
+              <div class="meta">Restan <strong>42</strong> cuotas</div>
+              <div class="price">Valor cuota $ 120.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">LOGAN PRIVILÈGE</div>
+            <div class="card-body">
+              <h3>LOGAN PRIVILÈGE</h3>
+              <div class="meta">Valor: $ 14.200.000 (Gastos incluidos)</div>
+              <div class="meta">Toma de usado</div>
+              <div class="meta">Restan <strong>60</strong> cuotas</div>
+              <div class="price">Valor cuota $ 180.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="thumb">CAPTUR INTENSE</div>
+            <div class="card-body">
+              <h3>CAPTUR INTENSE</h3>
+              <div class="meta">Valor: $ 18.900.000 (Gastos incluidos)</div>
+              <div class="meta">Toma de usado</div>
+              <div class="meta">Restan <strong>30</strong> cuotas</div>
+              <div class="price">Valor cuota $ 260.000</div>
+              <a href="#consulta" class="btn brand">Me interesa</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -119,7 +186,7 @@
 
 <footer>
   <div class="wrap">
-    © 2025 Clicon Automotores · <a href="#modelos">Modelos</a> · <a href="#consulta">Contacto</a>
+    © 2025 Clicon Automotores · <a href="#modelos">Modelos</a> · <a href="#adjudicados">Adjudicados</a> · <a href="#consulta">Contacto</a>
   </div>
 </footer>
 
